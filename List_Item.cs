@@ -15,6 +15,8 @@ namespace First_Impressions_Ratings
         public int graphics;
         public int music;
         public int fun;
+
+        public int index;
         public double average;
 
         public List_Item()
@@ -70,7 +72,7 @@ namespace First_Impressions_Ratings
             while (rating == -1)
             {
                 Console.Clear();
-                Console.WriteLine(" Give your rating (1-10) for:\n {0}", attribute);
+                Console.WriteLine(" Give your rating (1-10) for:\n\n {0}", attribute);
                 input = Console.ReadLine();
 
                 try
@@ -90,6 +92,8 @@ namespace First_Impressions_Ratings
 
         public void PrintCard()
         {
+            string input;
+
             Console.Clear();
             Console.WriteLine("==========================================================");
             Console.WriteLine("\t\t{0}", name);
@@ -107,8 +111,20 @@ namespace First_Impressions_Ratings
             Console.WriteLine();
             Console.WriteLine("==========================================================");
             Console.WriteLine();
-            Console.WriteLine(" Press Enter to Continue . . .");
-            Console.ReadLine();
+
+            if (average == -1)
+            {
+                Console.WriteLine(" Would you like to rate this game (y/n)?");
+                input = Console.ReadLine();
+
+                if (input.ToLower() == "y")
+                    RateGame();
+            }
+            else
+            {
+                Console.WriteLine(" Press Enter to Continue . . .");
+                Console.ReadLine();
+            }
         }
     }
 }

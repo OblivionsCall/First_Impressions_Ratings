@@ -148,13 +148,18 @@ namespace First_Impressions_Ratings
         }
 
         public static void ListMenu(string path)
-        {
-            List<List_Item> GameList = new List<List_Item>();
+        {            
             string filepath = LIST_PATH + path;
             string input;
             string s;
             string[] values;
             int choice = -1;
+            int counter = 0;
+
+            GameRandomizer gr = new GameRandomizer();
+            SearchFunction sf = new SearchFunction();
+            List_Item SearchResult = null;
+            List<List_Item> GameList = new List<List_Item>();
 
             if (!File.Exists(filepath))
             {
@@ -192,6 +197,13 @@ namespace First_Impressions_Ratings
                 } // End of File Read and List creation
             } // End of StreamReader
 
+            GameList.Sort((x, y) => x.name.CompareTo(y.name));
+
+            foreach (List_Item item in GameList)
+            {
+                item.index = counter++;
+            }
+
             while (choice != 0)
             {
                 Console.Clear();
@@ -199,7 +211,7 @@ namespace First_Impressions_Ratings
                 Console.WriteLine(" {0}", path);
                 Console.WriteLine("=====================================\n");
 
-                Console.WriteLine(" 1. Search for Title (Nonfunctional)");
+                Console.WriteLine(" 1. Search for Title");
                 Console.WriteLine(" 2. Random Game");
                 Console.WriteLine(" 3. Generate Top 10 List (Nonfunctional)");
 
@@ -220,8 +232,17 @@ namespace First_Impressions_Ratings
 
                 switch (choice)
                 {
+                    case 1:
+                        Console.WriteLine("\n\n\n Enter part of the game name you would like to search for:");
+                        input = Console.ReadLine();
+                        SearchResult = sf.SearchFor(GameList, input);
+
+                        if (SearchResult != null)
+                            SearchResult.PrintCard();
+
+                        break;
                     case 2:
-                        RandomGame(GameList);
+                        gr.RandomGame(GameList);
                         break;
                     default:
                         break;
@@ -242,58 +263,6 @@ namespace First_Impressions_Ratings
                 }
             }
         }
-
-        public static void RandomGame(List<List_Item> GameList)
-        {
-            bool game_found = false;
-            bool list_done = true;
-            Random rnd = new Random();
-            int index = 0;
-            string input = "";
-
-            foreach (List_Item item in GameList)
-            {
-                if (item.average == -1)
-                {
-                    list_done = false;
-                    break;
-                }
-            }
-
-            if (!list_done)
-            {
-                while (game_found == false)
-                {
-                    index = rnd.Next(0, GameList.Count);
-
-                    if (GameList[index].average == -1)
-                        game_found = true;
-                }
-
-                while (input != "done")
-                {
-                    Console.Clear();
-                    Console.WriteLine("==========================================================");
-                    Console.WriteLine("Your game is: {0}", GameList[index].name);
-                    Console.WriteLine("==========================================================");
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine(" Go Play that for at least an hour and type 'done' when finished!");
-                    input = Console.ReadLine();
-                }
-
-                GameList[index].RateGame();
-                GameList[index].PrintCard();
-            } // endif !list_done
-
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(" You've rated every game on this list! Congratulations!");
-                Console.WriteLine(" Press Enter to Continue . . .");
-                Console.ReadLine();
-            }
-        } // end RandomGame()
         // End of the program, stop putting stuff below here
     }
 }
