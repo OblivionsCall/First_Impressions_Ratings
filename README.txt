@@ -1,5 +1,5 @@
 First Impressions Ratings
-Version 0.1
+Version 0.2 - 21-Jan-18
 Author: Chris "OblivionsCall" Hand
 This project is licensed under the terms of the MIT License
 
@@ -8,7 +8,9 @@ This project came about when I was thinking about searching algorithms and I fig
 
 The main feature is the "Random Game" feature where the idea is it gives you a random game from the list that you haven't played yet and you have to go play it for an hour and then can give a first impression rating. 
 
-Currently that is the only feature in the program but I am working to implement a search and a top 10 feature so you can see what you most enjoyed. 
+The Search function is now functional as of v0.2. Currently it is only a title search that matches substrings. If your punctuation is wrong according to the list then results will not be returned. If the search returns a list greater than 20 the user is alerted and asked to make the search more specific.
+
+Currently I am working to implement a top 10 feature so you can see what you most enjoyed. 
 
 USE
 The program creates a "Lists" local directory and an Example.txt file within if one does not currently exist (TODO - make this optional in a config file).
